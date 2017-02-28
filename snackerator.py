@@ -26,10 +26,17 @@ while True:
         if keys[27]:
             pygame.quit()
     screen.fill(WHITE)
+
     myfont = pygame.font.SysFont("georgia", 18)
     intro = myfont.render("Snackerator 9000 TM", 1, (255, 0, 0))
     yourname = myfont.render("Name", 1, (255, 0, 0))
     screen.blit(intro, (50, 10))
     screen.blit(yourname, (100, 40))
-    
+    clickbutton = myfont.render("Click Space for Next Kid.", 1, (255, 0, 0))
+    screen.blit(clickbutton, (50,75))
+    enjoy = myfont.render("Enjoy Your Snack!", 1, (255, 0, 0))
+    screen.blit(enjoy, (50, 150))
+    reset = myfont.render("Click R to Reset", 1, (255, 0, 0))
+    screen.blit(reset, (50, 115))
+
     pygame.display.flip()
