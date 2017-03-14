@@ -11,25 +11,10 @@ SCREEN_HEIGHT = 200
 pygame.init()
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
-
-#other stuff
-hungrykids = ["Sophie", "Colton", "Julia", "Isaac", "Owen", "Rose",
-         "Jillian", "Paisley", "Lily", "Samson", "Lucas", "Sophia",
-              "Sven", "Grace", "JM", "Violet", "Carson", "Stephen",
-              "Caden", "Abby", "Ella", "Wade", "Reed"]
-random.shuffle(hungrykids)
-print hungrykids
-
-while True: 
-    for event in pygame.event.get():
-        keys = pygame.key.get_pressed()
-        if keys[27]:
-            pygame.quit()
-    screen.fill(WHITE)
-
+def startScreen(kid):
     myfont = pygame.font.SysFont("georgia", 18)
     intro = myfont.render("Snackerator 9000 TM", 1, (255, 0, 0))
-    yourname = myfont.render("Name", 1, (255, 0, 0))
+    yourname = myfont.render(kid, 1, (255, 0, 0))
     screen.blit(intro, (50, 10))
     screen.blit(yourname, (100, 40))
     clickbutton = myfont.render("Click Space for Next Kid.", 1, (255, 0, 0))
@@ -39,4 +24,26 @@ while True:
     reset = myfont.render("Click R to Reset", 1, (255, 0, 0))
     screen.blit(reset, (50, 115))
 
-    pygame.display.flip()
+#other stuff
+hungrykids = ["Sophie", "Colton", "Julia", "Isaac", "Owen", "Rose",
+         "Jillian", "Paisley", "Lily", "Samson", "Lucas", "Sophia",
+              "Sven", "Grace", "JM", "Violet", "Carson", "Stephen",
+              "Caden", "Abby", "Ella", "Wade", "Reed", "Colton", "Colton", "Sophie", "Sophie", "Alex"]
+# Set up screen
+screen.fill(WHITE)
+startScreen("Press space")
+pygame.display.flip()
+
+while True: 
+    for event in pygame.event.get():
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:
+            pygame.quit()
+        if keys[pygame.K_SPACE]:
+            screen.fill(WHITE)
+            kid = random.choice(hungrykids)
+            print kid
+            hungrykids.remove(kid)
+            startScreen(kid)
+
+            pygame.display.flip()
