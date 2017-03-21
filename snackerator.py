@@ -28,7 +28,7 @@ def startScreen(kid):
 hungrykids = ["Sophie", "Colton", "Julia", "Isaac", "Owen", "Rose",
          "Jillian", "Paisley", "Lily", "Samson", "Lucas", "Sophia",
               "Sven", "Grace", "JM", "Violet", "Carson", "Stephen",
-              "Caden", "Abby", "Ella", "Wade", "Reed", "Colton", "Colton", "Sophie", "Sophie", "Alex"]
+              "Caden", "Abby", "Ella", "Wade", "Reed"]
 # Set up screen
 screen.fill(WHITE)
 startScreen("Press space")
