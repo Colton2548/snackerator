@@ -41,9 +41,12 @@ while True:
             pygame.quit()
         if keys[pygame.K_SPACE]:
             screen.fill(WHITE)
-            kid = random.choice(hungrykids)
-            print kid
-            hungrykids.remove(kid)
-            startScreen(kid)
-
-            pygame.display.flip()
+            if len(hungrykids) > 0:
+                kid = random.choice(hungrykids)
+                print kid
+                hungrykids.remove(kid)
+                startScreen(kid)
+                pygame.display.flip()
+                
+             
+                    
