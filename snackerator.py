@@ -10,12 +10,21 @@ SCREEN_WIDTH = 300
 SCREEN_HEIGHT = 200
 pygame.init()
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+hungrykids = []
+
+#other stuff
+allKids = ["Sophie", "Colton", "Julia", "Isaac", "Owen", "Rose",
+         "Jillian", "Paisley", "Lily", "Samson", "Lucas", "Sophia",
+              "Sven", "Grace", "JM", "Violet", "Carson", "Stephen",
+              "Caden", "Abby", "Ella", "Wade", "Reed"]
 
 def startScreen(kid):
     myfont = pygame.font.SysFont("georgia", 18)
     intro = myfont.render("Snackerator 9000 TM", 1, (255, 0, 0))
     yourname = myfont.render(kid, 1, (255, 0, 0))
+    alexSubtitle = myfont.render("Alex also made this", 1, (255, 0, 0))
     screen.blit(intro, (50, 10))
+    screen.blit(alexSubtitle, (150, 180))
     screen.blit(yourname, (100, 40))
     clickbutton = myfont.render("Click Space for Next Kid.", 1, (255, 0, 0))
     screen.blit(clickbutton, (50,75))
@@ -24,14 +33,25 @@ def startScreen(kid):
     reset = myfont.render("Click R to Reset", 1, (255, 0, 0))
     screen.blit(reset, (50, 115))
 
+def resetKids():
+    global hungrykids
+    hungrykids = []
+    for i in allKids:
+        hungrykids.append(i)
+
 #other stuff
 hungrykids = ["Sophie", "Colton", "Julia", "Isaac", "Owen", "Rose",
          "Jillian", "Paisley", "Lily", "Samson", "Lucas", "Sophia",
               "Sven", "Grace", "JM", "Violet", "Carson", "Stephen",
               "Caden", "Abby", "Ella", "Wade", "Reed"]
+
+# Starts up Kid list
+
+resetKids()
+
 # Set up screen
 screen.fill(WHITE)
-startScreen("Press space")
+startScreen("Press Space")
 pygame.display.flip()
 
 while True: 
@@ -47,6 +67,16 @@ while True:
                 hungrykids.remove(kid)
                 startScreen(kid)
                 pygame.display.flip()
-                
-             
-                    
+        if keys[pygame.K_l]:
+            screen.fill(WHITE)
+            hungrykids.append(kid)
+            kid = random.choice(hungrykids)
+            print kid
+            hungrykids.remove(kid)
+            startScreen(kid)
+            pygame.display.flip()
+        if keys[pygame.K_r]:
+            resetKids()
+            screen.fill(WHITE)
+            startScreen("Press Space")
+            pygame.display.flip()
