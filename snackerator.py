@@ -1,16 +1,17 @@
-#Goals: List of names, Pick one randomly, Delete each one as they're
-#picked
-#Reset the list, "trigger" button (2)
+#importing stuff
 import random
+import pygame
+import time
 
 #initiating pygame and font
-import pygame
 WHITE = (255, 255, 255)
 SCREEN_WIDTH = 300
 SCREEN_HEIGHT = 200
 pygame.init()
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 hungrykids = []
+lastchoicetime = 0
+minimumtime = 10
 
 #other stuff
 allKids = ["Sophie", "Colton", "Julia", "Isaac", "Owen", "Rose",
@@ -45,7 +46,7 @@ hungrykids = ["Sophie", "Colton", "Julia", "Isaac", "Owen", "Rose",
               "Sven", "Grace", "JM", "Violet", "Carson", "Stephen",
               "Caden", "Abby", "Ella", "Wade", "Reed"]
 
-# Starts up Kid list
+#Starts up Kid list
 
 resetKids()
 
@@ -62,11 +63,17 @@ while True:
         if keys[pygame.K_SPACE]:
             screen.fill(WHITE)
             if len(hungrykids) > 0:
-                kid = random.choice(hungrykids)
-                print kid
-                hungrykids.remove(kid)
-                startScreen(kid)
-                pygame.display.flip()
+                now = time.time()
+                dif = now - lastchoicetime
+                if dif < minimumtime:
+                    print "Slow Down"
+                else:
+                    kid = random.choice(hungrykids)
+                    lastchoicetime = time.time()
+                    print kid, dif
+                    hungrykids.remove(kid)
+                    startScreen(kid)
+                    pygame.display.flip()
         if keys[pygame.K_l]:
             screen.fill(WHITE)
             hungrykids.append(kid)
