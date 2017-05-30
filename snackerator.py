@@ -1,4 +1,4 @@
-#importing stuff
+#importing stuff for the program
 import random
 import pygame
 import time
@@ -9,16 +9,22 @@ SCREEN_WIDTH = 300
 SCREEN_HEIGHT = 200
 pygame.init()
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-hungrykids = []
 lastchoicetime = 0
-minimumtime = 10
+minimumtime = .1
 
-#other stuff
+#contains a list of every kid in the class; that will not change
 allKids = ["Sophie", "Colton", "Julia", "Isaac", "Owen", "Rose",
          "Jillian", "Paisley", "Lily", "Samson", "Lucas", "Sophia",
               "Sven", "Grace", "JM", "Violet", "Carson", "Stephen",
               "Caden", "Abby", "Ella", "Wade", "Reed"]
 
+# hungrykids contains a list of kids who have not eaten
+hungrykids = []
+
+# fedkids is a list of kids who have eaten
+fedkids = []
+
+#functions
 def startScreen(kid):
     myfont = pygame.font.SysFont("georgia", 18)
     intro = myfont.render("Snackerator 9000 TM", 1, (255, 0, 0))
@@ -40,14 +46,26 @@ def resetKids():
     for i in allKids:
         hungrykids.append(i)
 
-#other stuff
+def removeKid():
+    global lastchoicetime
+    now = time.time()
+    dif = now - lastchoicetime
+    if dif > minimumtime:
+        lastchoicetime = time.time()
+        kid = random.choice(hungrykids)
+        hungrykids.remove(kid)
+        fedkids.append(kid)
+        startScreen(kid)
+        pygame.display.flip()
+        return kid
+
+#list of kids who need to have snack
 hungrykids = ["Sophie", "Colton", "Julia", "Isaac", "Owen", "Rose",
          "Jillian", "Paisley", "Lily", "Samson", "Lucas", "Sophia",
               "Sven", "Grace", "JM", "Violet", "Carson", "Stephen",
               "Caden", "Abby", "Ella", "Wade", "Reed"]
 
 #Starts up Kid list
-
 resetKids()
 
 # Set up screen
@@ -55,6 +73,7 @@ screen.fill(WHITE)
 startScreen("Press Space")
 pygame.display.flip()
 
+#This is how the code works
 while True: 
     for event in pygame.event.get():
         keys = pygame.key.get_pressed()
@@ -63,25 +82,17 @@ while True:
         if keys[pygame.K_SPACE]:
             screen.fill(WHITE)
             if len(hungrykids) > 0:
-                now = time.time()
-                dif = now - lastchoicetime
-                if dif < minimumtime:
-                    print "Slow Down"
+                kid = removeKid()
+                if kid:
+                    print kid, " for snack!", len(hungrykids), " left."
                 else:
-                    kid = random.choice(hungrykids)
-                    lastchoicetime = time.time()
-                    print kid, dif
-                    hungrykids.remove(kid)
-                    startScreen(kid)
-                    pygame.display.flip()
+                    print "slow down, little jimmy!"
+            if len(hungrykids) == 0:
+                print "Snack is over!"
         if keys[pygame.K_l]:
             screen.fill(WHITE)
             hungrykids.append(kid)
-            kid = random.choice(hungrykids)
-            print kid
-            hungrykids.remove(kid)
-            startScreen(kid)
-            pygame.display.flip()
+            removeKid()
         if keys[pygame.K_r]:
             resetKids()
             screen.fill(WHITE)
